@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 import ListAnsweredQuestions from '../containers/listAnsweredQuestions';
+import saveQuestionnaire from '../actions/saveQuestionnaireData';
 
 class AnsweredQuestionsPanel extends Component {
 
@@ -42,7 +43,7 @@ class AnsweredQuestionsPanel extends Component {
               <a
                 className="waves-effect waves-light btn black"
                 id="sendtButton"
-                onClick={() => browserHistory.push('ranking')}
+                onClick={() => saveQuestionnaire(1)}
               >
                 <i className="material-icons right" id="sendButtonIcon">send</i>Submeter
               </a>
