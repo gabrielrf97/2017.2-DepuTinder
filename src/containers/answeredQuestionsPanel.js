@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import ListAnsweredQuestions from '../containers/listAnsweredQuestions';
-import saveQuestionnaire from '../actions/saveQuestionnaireData';
+import SaveQuestionnaire from '../actions/saveQuestionnaireData';
 
 class AnsweredQuestionsPanel extends Component {
-
-  static goToRanking() {
-    saveQuestionnaire(1);
-    browserHistory.push('/ranking');
-  }
-
   constructor(props) {
     super(props);
     this.state = {
     };
+  }
+
+  goToRanking() {
+    this.props.answeredQuestions.map((question) => {
+      this.props.sendQuestionnaire(1, question.answerID, question.answer);
+    });
+
+    browserHistory.push('/ranking');
   }
 
   render() {
@@ -48,7 +52,7 @@ class AnsweredQuestionsPanel extends Component {
               <a
                 className="waves-effect waves-light btn black"
                 id="sendtButton"
-                onClick={() => AnsweredQuestionsPanel.goToRanking()}
+                onClick={() => this.goToRanking()}
               >
                 <i className="material-icons right" id="sendButtonIcon">send</i>Submeter
               </a>
@@ -60,4 +64,31 @@ class AnsweredQuestionsPanel extends Component {
   }
 }
 
-export default AnsweredQuestionsPanel;
+AnsweredQuestionsPanel.propTypes = {
+  answeredQuestions: PropTypes.arrayOf(PropTypes.object),
+  sendQuestionnaire: PropTypes.func,
+};
+
+AnsweredQuestionsPanel.defaultProps = {
+  answeredQuestions: [{
+    answerID: 0,
+    answer: 'answer',
+  }],
+  sendQuestionnaire() {},
+};
+
+function mapStateToProps(state) {
+  return {
+    answeredQuestions: state.answeredQuestions,
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    sendQuestionnaire(userID, questionID, answer) {
+      dispatch(SaveQuestionnaire(userID, questionID, answer));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AnsweredQuestionsPanel);
