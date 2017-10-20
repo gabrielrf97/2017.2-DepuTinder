@@ -5,6 +5,11 @@ import saveQuestionnaire from '../actions/saveQuestionnaireData';
 
 class AnsweredQuestionsPanel extends Component {
 
+  static goToRanking() {
+    saveQuestionnaire(1);
+    browserHistory.push('/ranking');
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -43,7 +48,7 @@ class AnsweredQuestionsPanel extends Component {
               <a
                 className="waves-effect waves-light btn black"
                 id="sendtButton"
-                onClick={() => saveQuestionnaire(1)}
+                onClick={() => AnsweredQuestionsPanel.goToRanking()}
               >
                 <i className="material-icons right" id="sendButtonIcon">send</i>Submeter
               </a>

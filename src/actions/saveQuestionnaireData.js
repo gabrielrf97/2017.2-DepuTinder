@@ -1,16 +1,22 @@
 import axios from 'axios';
 
-const HOST = 'http://localhost:8000/users';
+const HOST = 'http://localhost:8000/usersPost/';
 
-export function saveQuestionnaire(questionnaireId){
+export default function saveQuestionnaire(questionnaireId) {
   const requestData = {
-    id: questionnaireId,
+    userName: 'Amanda',
+    userEmail: 'amandalust@gmail.com',
+    userPassword: 'rolezinho',
+    userImage: '',
+    answeredQuestions: questionnaireId,
   };
-  const request = axios.post(`${HOST}sendData`, requestData)
-  .then(function (response) {
-    console.log(response);
+
+  const request = axios.post(`${HOST}`, requestData)
+  .then((response) => {
+    return (response);
   })
-  .catch(function (error) {
-    console.log(error);
+  .catch((error) => {
+    return (error);
   });
+  return (request);
 }
